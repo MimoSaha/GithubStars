@@ -18,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:name=".slices.GithubStarsProvider"
+            android:authorities="com.bykov.igor.githubstars.app"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.app.slice.category.SLICE" />
+            </intent-filter>
+        </provider>
     </application>
 
 </manifest>
