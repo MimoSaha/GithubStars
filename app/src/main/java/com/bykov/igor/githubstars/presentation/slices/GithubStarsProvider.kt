@@ -11,12 +11,11 @@ import android.util.LruCache
 import androidx.core.graphics.drawable.IconCompat
 import androidx.slice.Slice
 import androidx.slice.SliceProvider
-import androidx.slice.builders.*
-import com.bumptech.glide.Glide
+import androidx.slice.builders.ListBuilder
+import androidx.slice.builders.SliceAction
 import com.bykov.igor.githubstars.R
 import com.bykov.igor.githubstars.data.user.model.GithubUser
-import com.bykov.igor.githubstars.presentation.MainActivity
-import java.time.LocalDate
+import com.bykov.igor.githubstars.presentation.ui.UsersActivity
 
 class GithubStarsProvider : SliceProvider(), SliceView {
 
@@ -24,7 +23,7 @@ class GithubStarsProvider : SliceProvider(), SliceView {
   private val cacheResponse = LruCache<Uri, List<GithubUser>?>(15)
 
   override fun onCreateSliceProvider(): Boolean {
-    presenter.bind(this)
+//    presenter.bind(this)
     return true
   }
 
@@ -44,7 +43,7 @@ class GithubStarsProvider : SliceProvider(), SliceView {
     }
     val sliceUri = uriBuilder.build()
     if (!TextUtils.isEmpty(data.path)) {
-      presenter.getProperties(sliceUri, data.path.substring(data.path.lastIndexOf("/") + 1), null, null)
+//      presenter.getProperties(sliceUri, data.path.substring(data.path.lastIndexOf("/") + 1), null, null)
     }
     return sliceUri
   }
@@ -64,7 +63,7 @@ class GithubStarsProvider : SliceProvider(), SliceView {
     val header = ListBuilder.HeaderBuilder()
             .setTitle("Best Hotels in $location")
             .setPrimaryAction(SliceAction.create(
-                    PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0),
+                    PendingIntent.getActivity(context, 0, Intent(context, UsersActivity::class.java), 0),
                     IconCompat.createWithResource(context, R.drawable.ic_star_black_24dp),
                     ListBuilder.ICON_IMAGE,
                     location
@@ -95,8 +94,8 @@ class GithubStarsProvider : SliceProvider(), SliceView {
     var count = 0
     for (item in 0..users.size) {
       try {
-        val theBitmap = Glide.with(context).load(searchResultUseCase.result[item].main_photo_url!!.replace("60", "200")).submit().get().toBitmap()
-        cache.put(searchResultUseCase.result[item].main_photo_url, theBitmap)
+//        val theBitmap = Glide.with(context).load(searchResultUseCase.result[item].main_photo_url!!.replace("60", "200")).submit().get().toBitmap()
+//        cache.put(searchResultUseCase.result[item].main_photo_url, theBitmap)
         if (++count == 2) break
       } catch (e: Exception) {
       }
