@@ -8,8 +8,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    lifecycle.addObserver(getPresenter())
+    lifecycle.addObserver(presenter())
   }
 
-  abstract fun getPresenter() : LifecycleObserver
+  abstract fun presenter() : LifecycleObserver
 }

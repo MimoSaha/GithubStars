@@ -14,17 +14,12 @@ import kotlinx.coroutines.experimental.android.Main
 
 open class BasePresenter<V : MvpView> : LifecycleObserver, CoroutineScope {
 
-  private lateinit var job: Job
+  private val job: Job by lazy { Job() }
 
   protected lateinit var view: V
 
   fun bind(view: V) {
     this.view = view
-  }
-
-  @OnLifecycleEvent(Lifecycle.Event.ON_START)
-  fun onCreate() {
-    job = Job()
   }
 
   @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

@@ -15,7 +15,7 @@ import androidx.slice.builders.ListBuilder
 import androidx.slice.builders.SliceAction
 import com.bykov.igor.githubstars.R
 import com.bykov.igor.githubstars.data.user.model.GithubUser
-import com.bykov.igor.githubstars.presentation.ui.UsersActivity
+import com.bykov.igor.githubstars.presentation.ui.users.UsersActivity
 
 class GithubStarsProvider : SliceProvider(), SliceView {
 

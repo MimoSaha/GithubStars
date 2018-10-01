@@ -8,6 +8,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 object NetModule {
@@ -19,6 +20,7 @@ object NetModule {
       Retrofit.Builder()
           .baseUrl("https://github.com/")
           .addCallAdapterFactory(CoroutineCallAdapterFactory())
+          .addConverterFactory(GsonConverterFactory.create())
           .build()
     }
 

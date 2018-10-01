@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface GithubService {
 
-  @GET("/user")
+  @GET("/users")
   fun getUser(): Deferred<List<GithubUser>>
 }

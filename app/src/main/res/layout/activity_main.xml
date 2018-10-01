@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.UsersActivity">
+    tools:context=".presentation.ui.users.UsersActivity">
 
-    <TextView
+    <view class="androidx.appcompat.app.AlertController$RecycleListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

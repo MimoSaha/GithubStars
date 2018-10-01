@@ -1,7 +1,6 @@
 package com.bykov.igor.githubstars.domain
 
 import kotlinx.coroutines.experimental.Deferred
-import org.kodein.di.KodeinAware
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
@@ -9,7 +8,7 @@ import org.kodein.di.KodeinAware
  * in the application should implement this contract).
  *
  */
-abstract class UseCase<T, in Params> : KodeinAware {
+abstract class UseCase<T, in Params> {
 
   internal abstract fun buildUseCaseObservable(params: Params): Deferred<T>
 }
