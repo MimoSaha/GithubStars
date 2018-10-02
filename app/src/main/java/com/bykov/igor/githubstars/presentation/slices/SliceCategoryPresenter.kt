@@ -1,7 +1,7 @@
 package com.bykov.igor.githubstars.presentation.slices
 
 import android.net.Uri
-import com.bykov.igor.githubstars.domain.user.GetUsers
+import com.bykov.igor.githubstars.domain.user.interactor.GetUsers
 import com.bykov.igor.githubstars.presentation.mvp.BasePresenter
 import kotlinx.coroutines.experimental.launch
 import org.kodein.di.Kodein
@@ -17,7 +17,7 @@ class SliceCategoryPresenter(override val kodein: Kodein) : BasePresenter<SliceV
 
       val results = getUsers.buildUseCaseObservable(Unit).await()
 
-      view.rednerUsers(sliceUri, results)
+      view.rednerUsers(sliceUri, results.items)
     }
   }
 }

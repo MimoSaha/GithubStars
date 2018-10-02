@@ -8,6 +8,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
 
 class UsersActivity : BaseActivity(), KodeinAware, UsersView {
 
@@ -25,6 +26,6 @@ class UsersActivity : BaseActivity(), KodeinAware, UsersView {
   override fun presenter() = presenter
 
   override fun renderUsers(users: List<GithubUser>) {
-
+    Timber.d(users.toString())
   }
 }

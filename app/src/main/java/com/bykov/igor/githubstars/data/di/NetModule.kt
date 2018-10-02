@@ -2,6 +2,7 @@ package com.bykov.igor.githubstars.data.di
 
 import com.bykov.igor.githubstars.data.network.GithubService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -9,18 +10,23 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 
 object NetModule {
 
   val module = Kodein.Module("NetModule") {
 
+    bind<OkHttpClient>() with singleton {
+      OkHttpClient.Builder()
+          .addInterceptor(instance<HttpLoggingInterceptor>())
+          .build()
+    }
 
     bind<Retrofit>() with singleton {
       Retrofit.Builder()
-          .baseUrl("https://github.com/")
+          .baseUrl("https://api.github.com/")
           .addCallAdapterFactory(CoroutineCallAdapterFactory())
           .addConverterFactory(GsonConverterFactory.create())
+          .client(instance<OkHttpClient>())
           .build()
     }
 
@@ -30,9 +36,7 @@ object NetModule {
 
 
     bind<HttpLoggingInterceptor>() with singleton {
-      val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-        Timber.tag("OkHttp").d(it)
-      })
+      val logging = HttpLoggingInterceptor()
       logging.level = HttpLoggingInterceptor.Level.BODY
       logging
     }
