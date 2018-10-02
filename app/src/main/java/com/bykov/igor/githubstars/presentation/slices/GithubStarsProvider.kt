@@ -11,19 +11,27 @@ import android.util.LruCache
 import androidx.core.graphics.drawable.IconCompat
 import androidx.slice.Slice
 import androidx.slice.SliceProvider
+import androidx.slice.builders.GridRowBuilder
 import androidx.slice.builders.ListBuilder
 import androidx.slice.builders.SliceAction
 import com.bykov.igor.githubstars.R
 import com.bykov.igor.githubstars.data.user.model.GithubUser
 import com.bykov.igor.githubstars.presentation.ui.users.UsersActivity
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 
-class GithubStarsProvider : SliceProvider(), SliceView {
+class GithubStarsProvider : SliceProvider(), KodeinAware, SliceView {
+
+  override val kodein: Kodein by lazy { (context as KodeinAware).kodein }
+
+  private val presenter: SliceCategoryPresenter by instance()
 
   private val cache = LruCache<String, Bitmap?>(15)
-  private val cacheResponse = LruCache<Uri, List<GithubUser>?>(15)
+  private val cacheResponse = LruCache<Uri, List<GithubUser>>(15)
 
   override fun onCreateSliceProvider(): Boolean {
-//    presenter.bind(this)
+    presenter.bind(this)
     return true
   }
 
@@ -43,72 +51,65 @@ class GithubStarsProvider : SliceProvider(), SliceView {
     }
     val sliceUri = uriBuilder.build()
     if (!TextUtils.isEmpty(data.path)) {
-//      presenter.getProperties(sliceUri, data.path.substring(data.path.lastIndexOf("/") + 1), null, null)
+      presenter.getUsers(sliceUri)
     }
     return sliceUri
   }
 
   @SuppressLint("Slices")
   override fun onBindSlice(sliceUri: Uri): Slice? {
-    val response = cacheResponse.get(sliceUri) ?: return null
-    var count = 0
-    val listBuilder =
-    // create parent ListBuilder
-            ListBuilder(
-                    context,
-                    sliceUri,
-                    ListBuilder.INFINITY
-            )
-    val location = sliceUri.path.substring(sliceUri.path.lastIndexOf("/") + 1)
-    val header = ListBuilder.HeaderBuilder()
-            .setTitle("Best Hotels in $location")
-            .setPrimaryAction(SliceAction.create(
-                    PendingIntent.getActivity(context, 0, Intent(context, UsersActivity::class.java), 0),
-                    IconCompat.createWithResource(context, R.drawable.ic_star_black_24dp),
-                    ListBuilder.ICON_IMAGE,
-                    location
-            ))
+    val response = cacheResponse.get(sliceUri)
+    response?.let {
+      val listBuilder =
+      // create parent ListBuilder
+          ListBuilder(
+              context,
+              sliceUri,
+              ListBuilder.INFINITY
+          )
+      val header = ListBuilder.HeaderBuilder()
+          .setTitle("Best contributors")
+          .setPrimaryAction(SliceAction.create(
+              PendingIntent.getActivity(context, 0, Intent(context, UsersActivity::class.java), 0),
+              IconCompat.createWithResource(context, R.drawable.ic_star_black_24dp),
+              ListBuilder.ICON_IMAGE,
+              "Best contributors"
+          ))
 
-//    listBuilder.setHeader(header)
-//    val grid = GridRowBuilder()
-//    for (row in 0..response.result.size) {
-//      val bitmap = cache.get(response.result[row].main_photo_url)
-//      bitmap?.let {
-//        val cellB = GridRowBuilder.CellBuilder()
-//        cellB.addImage(IconCompat.createWithBitmap(it), ListBuilder.LARGE_IMAGE)
-//        cellB.addText(response.result[row].hotel_name!!)
-//        cellB.addTitleText("Checkin ${response.result[row].checkin!!.from!!}")
-//        cellB.contentIntent = PendingIntent.getActivity(context, 0, createDefaultUri(response.result[row].hotel_id!!), 0)
-//        grid.addCell(cellB)
-//        ++count
-//      }
-//      if (count == 2) break
-//    }
-//    listBuilder.addGridRow(grid)
-    return listBuilder.build()
-  }
-
-
-  override fun rednerUsers(sliceUri: Uri, users: List<GithubUser>) {
-    cacheResponse.put(sliceUri, users)
-    var count = 0
-    for (item in 0..users.size) {
-      try {
-//        val theBitmap = Glide.with(context).load(searchResultUseCase.result[item].main_photo_url!!.replace("60", "200")).submit().get().toBitmap()
-//        cache.put(searchResultUseCase.result[item].main_photo_url, theBitmap)
-        if (++count == 2) break
-      } catch (e: Exception) {
+      listBuilder.setHeader(header)
+      val grid = GridRowBuilder()
+      for (row in 0..response.size) {
+        val bitmap = cache.get(response[row].avatarUrl)
+        bitmap?.let {
+          val cellB = GridRowBuilder.CellBuilder()
+          cellB.addImage(IconCompat.createWithBitmap(it), ListBuilder.LARGE_IMAGE)
+          cellB.addText(response[row].login)
+          cellB.contentIntent = PendingIntent.getActivity(context, 0,
+              createDefaultUri(response[row].url), 0)
+          grid.addCell(cellB)
+        }
       }
-    }
-    context.contentResolver.notifyChange(sliceUri, null)
+      listBuilder.addGridRow(grid)
+      return listBuilder.build()
+    } ?: presenter.getUsers(sliceUri)
+    return null
   }
 
-//  private fun createDefaultUri(id: Int): Intent {
-//    val now = LocalDate.now()
-//    val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
-//    val arrival = fmt.print(now.plusDays(1))
-//    val departure = fmt.print(now.plusDays(2))
-//    val webpage = Uri.parse("booking://hotel/$id?checkin=$arrival&checkout=$departure")
-//    return Intent(Intent.ACTION_VIEW, webpage)
-//  }
+
+  override fun renderUsers(sliceUri: Uri, users: List<GithubUser>) {
+    cacheResponse.put(sliceUri, users)
+    presenter.loadImages(sliceUri, users)
+  }
+
+  override fun updateBitmaps(sliceUri: Uri, bitmaps: List<Pair<String, Bitmap>>) {
+    for (bitmap in bitmaps) {
+      cache.put(bitmap.first, bitmap.second)
+    }
+    context?.contentResolver?.notifyChange(sliceUri, null)
+  }
+
+  private fun createDefaultUri(url: String): Intent {
+    val webpage = Uri.parse(url)
+    return Intent(Intent.ACTION_VIEW, webpage)
+  }
 }

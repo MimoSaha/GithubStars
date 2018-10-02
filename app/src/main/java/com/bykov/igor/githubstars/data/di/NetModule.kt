@@ -26,7 +26,7 @@ object NetModule {
           .baseUrl("https://api.github.com/")
           .addCallAdapterFactory(CoroutineCallAdapterFactory())
           .addConverterFactory(GsonConverterFactory.create())
-          .client(instance<OkHttpClient>())
+          .client(instance())
           .build()
     }
 

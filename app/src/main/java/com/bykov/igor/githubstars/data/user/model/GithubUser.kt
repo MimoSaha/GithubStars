@@ -1,7 +1,10 @@
 package com.bykov.igor.githubstars.data.user.model
 
+import com.google.gson.annotations.SerializedName
+
 data class GithubUser(
-    val name: String,
-    val stars: Long,
+    val login: String,
+    @SerializedName("avatar_url")
+    val avatarUrl: String,
     val url: String
 )
