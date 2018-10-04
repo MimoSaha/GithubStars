@@ -14,7 +14,6 @@ import androidx.slice.SliceProvider
 import androidx.slice.builders.GridRowBuilder
 import androidx.slice.builders.ListBuilder
 import androidx.slice.builders.SliceAction
-import com.bykov.igor.githubstars.R
 import com.bykov.igor.githubstars.data.user.model.GithubUser
 import com.bykov.igor.githubstars.presentation.ui.users.UsersActivity
 import org.kodein.di.Kodein
@@ -71,21 +70,21 @@ class GithubStarsProvider : SliceProvider(), KodeinAware, SliceView {
           .setTitle("Best contributors")
           .setPrimaryAction(SliceAction.create(
               PendingIntent.getActivity(context, 0, Intent(context, UsersActivity::class.java), 0),
-              IconCompat.createWithResource(context, R.drawable.ic_star_black_24dp),
+              IconCompat.createWithResource(context, android.R.drawable.ic_delete),
               ListBuilder.ICON_IMAGE,
               "Best contributors"
           ))
 
       listBuilder.setHeader(header)
       val grid = GridRowBuilder()
-      for (row in 0..response.size) {
-        val bitmap = cache.get(response[row].avatarUrl)
+      for (user in response) {
+        val bitmap = cache.get(user.avatarUrl)
         bitmap?.let {
           val cellB = GridRowBuilder.CellBuilder()
           cellB.addImage(IconCompat.createWithBitmap(it), ListBuilder.LARGE_IMAGE)
-          cellB.addText(response[row].login)
+          cellB.addText(user.login)
           cellB.contentIntent = PendingIntent.getActivity(context, 0,
-              createDefaultUri(response[row].url), 0)
+              createDefaultUri(user.url), 0)
           grid.addCell(cellB)
         }
       }

@@ -6,8 +6,10 @@ import com.bykov.igor.githubstars.data.user.model.GithubUser
 import com.bykov.igor.githubstars.domain.images.LoadImage
 import com.bykov.igor.githubstars.domain.user.interactor.GetUsers
 import com.bykov.igor.githubstars.presentation.mvp.BasePresenter
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.IO
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.withContext
 
 
 class SliceCategoryPresenter(
@@ -27,8 +29,7 @@ class SliceCategoryPresenter(
       val results = mutableListOf<Pair<String, Bitmap>>()
       for (user in users) {
         this.launch {
-        val response = async { loadImage.buildUseCaseObservable(user.avatarUrl) }
-        val bitmap = response.await()
+        val bitmap = withContext(Dispatchers.IO){ loadImage.buildUseCaseObservable(user.avatarUrl) }
         results.add(Pair(user.avatarUrl, bitmap))
       }
       view.updateBitmaps(sliceUri, results)
