@@ -65,6 +65,4 @@ script:
   - gcloud components update
   - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
   - gcloud firebase test android run --app /home/travis/build/IgorB10/GithubStars/app/build/outputs/apk/debug/app-debug.apk \
-          --type=robo \
-          --device-ids=shamu,Nexus5 \
-          --os-version-ids=9,21
+          --type=robo --device-ids=shamu,Nexus5 --os-version-ids=9,21
