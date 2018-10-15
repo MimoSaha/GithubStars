@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface GithubService {
 
-  @GET("search/users?q=followers:%3E1000+sort:followers&per_page=3")
+  @GET("search/users?q=followers:%3E1000+sort:followers&per_page=10")
   fun getUser(): Deferred<GithubRepsonse>
 }

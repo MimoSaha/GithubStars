@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GithubStars</string>
+    <string name="name">Name:</string>
+    <string name="navigate"><![CDATA[Navigate ->]]></string>
 </resources>

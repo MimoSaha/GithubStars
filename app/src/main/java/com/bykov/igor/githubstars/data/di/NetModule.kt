@@ -34,13 +34,10 @@ object NetModule {
       instance<Retrofit>().create(GithubService::class.java)
     }
 
-
     bind<HttpLoggingInterceptor>() with singleton {
       val logging = HttpLoggingInterceptor()
       logging.level = HttpLoggingInterceptor.Level.BODY
       logging
     }
-
-
   }
 }

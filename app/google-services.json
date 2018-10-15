@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "29700731445",
+    "firebase_url": "https://github-stars-1f51a.firebaseio.com",
+    "project_id": "github-stars-1f51a",
+    "storage_bucket": "github-stars-1f51a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29700731445:android:95f6bc00eca16ddb",
+        "android_client_info": {
+          "package_name": "com.bykov.igor.githubstars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29700731445-3s6p3e6q7naia00rmo94nsu7bhqerlnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDuvRCvJ1oLYyBgA1H5teTf6Rlk46-FDw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
