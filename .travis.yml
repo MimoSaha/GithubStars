@@ -65,7 +65,7 @@ script:
   - gcloud components update
   #- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
   - gcloud firebase test android run --app /home/travis/build/IgorB10/GithubStars/app/build/outputs/apk/debug/app-debug.apk \
-  --type=robo \
-  --device model=Nexus4,version=19 \
-  --device model=Nexus4,version=21 \
+          --type=robo \
+          --device model=Nexus4,version=19 \
+          --device model=Nexus4,version=21 \
 
