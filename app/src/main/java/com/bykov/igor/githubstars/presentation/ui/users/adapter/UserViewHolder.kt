@@ -8,7 +8,8 @@ import com.bykov.igor.githubstars.R
 
 class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-  val userName : TextView = view.findViewById(R.id.userName)
-  val userImage : ImageView = view.findViewById(R.id.userImage)
-
+  val view: View = view.findViewById(R.id.userView)
+  val userName: TextView = view.findViewById(R.id.userName)
+  val userImage: ImageView = view.findViewById(R.id.userImage)
+  val navigateToUser: View = view.findViewById(R.id.navigateToUser)
 }
