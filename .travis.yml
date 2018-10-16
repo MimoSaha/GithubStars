@@ -62,8 +62,8 @@ before_script:
   - gcloud auth activate-service-account firebase-adminsdk-x55vy@github-stars-1f51a.iam.gserviceaccount.com --key-file=key.json --project=github-stars-1f51a
 
 script:
-  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
-  - "./gradlew build assembleDebug"
+  - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
+  - ./gradlew build assembleDebug
   - gcloud components update
   - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
