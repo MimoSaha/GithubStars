@@ -6,4 +6,4 @@ Small example project that demostrate how to ingrate Travis with Firebase Test L
 
 Robo test graph crawl:
 
-<img src="https://www.dropbox.com/s/icrqll76oxjg3xn/2018-10-15_20_49_40.747356_wZqH%252FNexus4-19-en-portrait%252Fartifacts%252Foutput%252Fsitemap.png?dl=0" alt="graph crawl"/>
+<img src="/image/graph_crawl.png" alt="graph crawl"/>
