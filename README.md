@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/IgorB10/GithubStars.svg?branch=master)](https://travis-ci.org/IgorB10/GithubStars)
 
-Small example project that demostrate how to ingrate Travis with Firebase Test Lab
+Small example project that demostrate how to integrate Travis with Firebase Test Lab
 
 Robo test graph crawl:
 
