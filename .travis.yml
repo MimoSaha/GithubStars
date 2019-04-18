@@ -59,7 +59,7 @@ before_script:
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud version
   # Add gcloud auth
-  - gcloud auth activate-service-account firebase-adminsdk-x55vy@github-stars-1f51a.iam.gserviceaccount.com --key-file=key.json --project=github-stars-1f51a
+  - gcloud auth activate-service-account firebase-adminsdk-0hn49@star-c681c.iam.gserviceaccount.com --key-file=star-c681c-firebase-adminsdk-0hn49-c5f8005129.json --project=star-c681c
 
 script:
   - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
